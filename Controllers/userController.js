@@ -110,6 +110,8 @@ module.exports = {
     try {
       const { email, password } = req.body;
 
+      
+
       const userExist = await User.findOne({ email });
       if (!userExist) {
         return res
@@ -223,7 +225,6 @@ module.exports = {
               .status(200)
               .send({ message: "authentication failed", success: false });
           } else {
-            console.log("reached here");
             console.log(result.id);
 
             User.findOne({ _id: result.id }).then((user) => {

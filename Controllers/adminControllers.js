@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
 const userModel = require("../Models/userModel");
+const Room = require("../Models/roomSchema");
 
 module.exports = {
   adminSignIn: async (req, res) => {
@@ -72,5 +73,42 @@ module.exports = {
     } catch (err) {
         res.status(401).json({ authorization: false })
     }
+},
+addRoom : async (req, res) => {
+
+
+try {
+
+  const {
+    roomName,
+    category,
+    price,
+    images,
+    checkboxe,
+    numberofBeds,
+    numberOfRooms,
+    numberofStayDays,
+    allowedGuests,
+    rules,
+    description
+  } = await req.body.roomData
+
+  console.log(req.body.roomData);
+  
+  const newRoom = new Room(req.body.roomData)
+  await newRoom.save().then(()=>{
+    res.status(200).send({message:"New room added successfully",success:true})
+  }).catch((err) => {
+    console.log(err)
+    res.status(200).send({message: "failed! ensure all data is given",success:false})
+  })
+  
+} catch (error) {
+  console.log(error);
+  res.status(500).send({message:"Something went wrong",success:false})
+}
+
+
 }
 };
+   
