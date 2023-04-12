@@ -14,6 +14,8 @@ router.post("/admin-sign-in", adminControllers.adminSignIn);
 
 router.post ("/add-room", adminControllers.addRoom)
 
+router.get("/get-hotel-data",adminControllers.getHotelData)
+
 router.get("/get-all-users", authmiddleware, async (req, res) => {
   try {
     const users = await userModel.find({ isAdmin: false });

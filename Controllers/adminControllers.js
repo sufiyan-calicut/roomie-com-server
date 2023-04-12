@@ -76,24 +76,11 @@ module.exports = {
 },
 addRoom : async (req, res) => {
 
-
 try {
 
-  const {
-    roomName,
-    category,
-    price,
-    images,
-    checkboxe,
-    numberofBeds,
-    numberOfRooms,
-    numberofStayDays,
-    allowedGuests,
-    rules,
-    description
-  } = await req.body.roomData
-
-  console.log(req.body.roomData);
+  console.log(req.body ,"body")
+ req.body.roomData.images = req.body.imageUrl
+  console.log(req.body.roomData, " romm datata" );
   
   const newRoom = new Room(req.body.roomData)
   await newRoom.save().then(()=>{
@@ -109,6 +96,12 @@ try {
 }
 
 
+},
+getHotelData : async (req, res) => {
+  console.log("inside hotel function")
+  const hoteldata = await Room.find()
+  console.log(hoteldata,"hotel data")
+  res.status(200).send(hoteldata)
 }
 };
    

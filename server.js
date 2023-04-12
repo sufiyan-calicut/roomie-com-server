@@ -14,6 +14,11 @@ const corsOptions = {
   origin: "*",
   credentials: true,
   optionSuccessStatus: 200,
+  allowedHeaders:[
+    'Content-type',
+    'Access',
+    'Authorization'
+]
 };
 
 app.use(cors(corsOptions));
