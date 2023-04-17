@@ -22,20 +22,12 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-    address: [
-      {
-        addressType: {
-          type: String,
-        },
-        address: {
-          type: String,
-        },
-      },
-    ],
+    userType:{
+      type:String,
+      default:"user"
+    }
+    
+    
   },
 
   { timestamps: true }

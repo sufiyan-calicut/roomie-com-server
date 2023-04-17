@@ -13,10 +13,10 @@ const roomSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  images: {
+  images: [{
     type: String,
     required: true
-  },
+  }],
   checkboxe: [{
     type: String
   }],

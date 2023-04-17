@@ -12,11 +12,20 @@ router.get("/allUsers", async (req, res) => {
 
 router.post("/admin-sign-in", adminControllers.adminSignIn);
 
-router.post ("/add-room", adminControllers.addRoom)
+router.post("/add-room", adminControllers.addRoom);
 
-router.get("/get-hotel-data",adminControllers.getHotelData)
+router.get("/get-hotel-data", adminControllers.getHotelData);
 
-router.get("/get-all-users", authmiddleware, async (req, res) => {
+router.get("/new-hotel-requests", adminControllers.newHotelRequests);
+
+router.post("/decline-hotel-request", adminControllers.declineHotelRequest);
+
+router.post("/accept-hotel-request", adminControllers.acceptHotelRequest);
+
+router.get("/get-all-hotelData", adminControllers.getHotelsData)
+
+router.put("/change-hotel-status", adminControllers.changeHotelStatus)
+router.get("/get-all-users", async (req, res) => {
   try {
     const users = await userModel.find({ isAdmin: false });
     if (!users) {
@@ -41,7 +50,6 @@ router.get("/get-all-users", authmiddleware, async (req, res) => {
 
 router.post("/change-user-status", authmiddleware, async (req, res) => {
   try {
-    
     const temp = req.body;
     const id = temp.record._id;
 
@@ -69,6 +77,6 @@ router.post("/change-user-status", authmiddleware, async (req, res) => {
   }
 });
 
-router.get('/admin-auth',adminControllers.checkAuth)
+router.get("/admin-auth", adminControllers.checkAuth);
 
 module.exports = router;
