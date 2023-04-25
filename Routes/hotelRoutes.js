@@ -1,9 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const hotelController = require ('../Controllers/hotelController')
+const hotelController = require('../Controllers/hotelController');
 
 // hotel sign in
-router.post('/doLogin',hotelController.doLogin)
-router.post("/newRegistration",hotelController.newRegister)
+router.post('/hotelLogin', hotelController.doLogin);
+router.post('/newRegistration', hotelController.newRegister);
+router.post('/addNewRoom',hotelController.addNewRoom);
 
-module.exports = router
+module.exports = router;

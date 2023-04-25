@@ -7,7 +7,7 @@ router.post("/sendOtp", userController.sendOtp);
 router.post("/verifyOtp", userController.verifyOtp);
 router.post("/doLogin", userController.doLogin);
 router.post("/resendOtp", userController.resendOtp);
-router.post("/get-user-info", authMiddleWare, userController.getUserInfo);
+router.post("/get-user-info", userController.getUserInfo);
 router.post("/reset-password",userController.resetPassword)
 router.post("/verify-reset-otp",userController.verifyResetOtp)
 router.post("/update-new-password",userController.updateNewPassword)

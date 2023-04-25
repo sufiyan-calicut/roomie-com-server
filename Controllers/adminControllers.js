@@ -3,6 +3,19 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../Models/userModel');
 const Room = require('../Models/roomSchema');
 const HotelDB = require('../Models/hotelSchema.js');
+const nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  service: 'Gmail',
+  /* eslint-disable */
+  auth: {
+    user: process.env.NODEMAILER_EMAIL,
+    pass: process.env.NODEMAILER_PASS,
+  },
+});
 
 module.exports = {
   adminSignIn: async (req, res) => {
@@ -126,10 +139,39 @@ module.exports = {
   acceptHotelRequest: async (req, res) => {
     try {
       const hotelID = req.body.hotelID;
-      await HotelDB.updateOne({ _id: hotelID }, { $set: { status: 'Active' } }).then(async () => {
+      const hotel = await HotelDB.findOne({ _id: hotelID });
+      const email = hotel.email;
+      const prefix = hotel.hotelName;
+      let suffix = Math.floor(Math.random() * 1000);
+      let uniqueId = `${prefix}_${suffix}`;
+      uniqueId = uniqueId.replace(/\s/g, '');
+
+      hotel.status = 'Active';
+      hotel.HotelId = uniqueId;
+      await hotel.save().then(async () => {
+        let mailOptions = {
+          to: email,
+          subject: 'Hotel ID',
+          html:
+            '<p>Dear user,Your registration is successfully completed: you can sign in with this Hotel ID' +
+            "<h3 style='font-weight:bold;'>" +
+            uniqueId +
+            '</h3>' + // html body
+            '<p> Have a Good Day </p>',
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.log(error), "can't send unique id to hotel email";
+          }
+          console.log('Message sent: %s', info.messageId);
+          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+        });
+
         const newHotels = await HotelDB.find({ status: 'Pending' });
         res.status(200).send({ message: 'Accepted', newHotels });
       });
+
+      const HotelID = console.log(hotel.email);
     } catch (error) {
       console.log(error);
       res.status(500).send({ message: 'failed , check after sometime' });
