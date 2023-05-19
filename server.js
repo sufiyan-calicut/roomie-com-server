@@ -8,7 +8,6 @@ const hotelRoute = require('./Routes/hotelRoutes.js')
 const cors = require("cors");
 
 
-console.log("inside server")
 app.use(express.json());
 
 const corsOptions = {

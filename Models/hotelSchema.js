@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const HotelDataSchema = new mongoose.Schema(
   {
@@ -10,6 +10,9 @@ const HotelDataSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: String,
+    },
+    price: {
+      type: Number,
     },
     place: {
       type: String,
@@ -53,7 +56,7 @@ const HotelDataSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    HotelId: {
+    hotelId: {
       type: String,
     },
     Password: {
@@ -61,12 +64,23 @@ const HotelDataSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Pending",
+      default: 'Pending',
+    },
+    message:{
+      type:String,
+      required:true
+    },
+    availableRooms: {
+      type: Number,
+      default: 5,
+    },
+    bookedRooms: {
+      type: Number,
     },
   },
   { timestamps: true }
 );
 
-const HotelDB = mongoose.model("HotelData", HotelDataSchema);
+const HotelDB = mongoose.model('HotelData', HotelDataSchema);
 
 module.exports = HotelDB;

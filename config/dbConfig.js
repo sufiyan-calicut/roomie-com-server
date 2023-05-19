@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-// check why i can't use environment variable inside mongoose.connect
+
 
 mongoose.connect(process.env.MONGO_URL);
 
