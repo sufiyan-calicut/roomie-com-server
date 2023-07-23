@@ -85,12 +85,10 @@ module.exports = {
             otp = 0;
           }, 60 * 5 * 1000); // 5 minutes in milliseconds
 
-          console.log(otp);
           res.status(200).json({ message: 'otp send to your email', success: true });
         });
       }
     } catch (error) {
-      console.log('error', error);
       return res.status(500).json({ message: 'error on user creation', success: false });
     }
   },
@@ -118,7 +116,6 @@ module.exports = {
       } else {
       }
     } catch (error) {
-      console.error(error, '=====');
       res.status(500).json({ message: 'internal server error' });
     }
   },
@@ -159,7 +156,6 @@ module.exports = {
       otp = Math.random();
       otp = otp * 1000000;
       otp = parseInt(otp);
-      console.log(otp);
 
       if (email) {
         let mailOptions = {
@@ -189,7 +185,6 @@ module.exports = {
         res.status(401).json({ message: 'unable to send otp', success: false });
       }
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ error: 'Failed to send email.' });
     }
   },
@@ -228,8 +223,6 @@ module.exports = {
       otp = Math.random();
       otp = otp * 1000000;
       otp = parseInt(otp);
-
-      console.log(otp);
 
       let mailOptions = {
         to: email,
@@ -339,7 +332,6 @@ module.exports = {
 
   fetchSearchData: async (req, res) => {
     try {
-     console.log(req.body)
       const skip = req.body.hotelData.length;
       const userInput = {
         $or: [
@@ -717,7 +709,7 @@ module.exports = {
       const isAvailable = checkIsAvailable();
       if (isAvailable) {
         const order = req.body.cashTobePay;
-        console.log(order);
+
         const instance = new Razorpay({
           key_id: process.env.RAZORPAY_KEY_ID,
           key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -728,7 +720,6 @@ module.exports = {
         };
         instance.orders.create(options, function (err, order) {
           if (err) {
-            console.error(err);
             return res.status(500).json({ message: 'Internal Server Error' });
           }
           res.status(200).json({ order: order });
@@ -739,7 +730,6 @@ module.exports = {
           .json({ message: ` Sorry, this hotel doesn't have enough available rooms. Please choose another hotel` });
       }
     } catch (error) {
-      console.log(error);
       res.status(500).json({ message: 'internal server error' });
     }
   },
@@ -863,13 +853,7 @@ module.exports = {
       };
       const isAvailable = checkIsAvailable();
 
-      //  console.log(isAvailable)
-      // console.log(availableRooms, totalRooms, bookedRooms,totalBookedRooms);
-
       if (isAvailable) {
-        console.log('available');
-        console.log(availableRooms, totalRooms);
-
         const bookingId = Math.floor(Math.random() * 9000) + 1000;
         req.body.data.bookingId = bookingId + '';
         req.body.data.userId = req.body.userId;
@@ -946,14 +930,12 @@ module.exports = {
         });
         0;
       } else {
-        console.log('not available');
         res.status(401).json({
           message: `
         Sorry, this hotel doesn't have enough available rooms. Please choose another hotel.`,
         });
       }
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'internal server error ' });
     }
   },

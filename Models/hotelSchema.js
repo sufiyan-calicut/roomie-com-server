@@ -77,6 +77,7 @@ const HotelDataSchema = new mongoose.Schema(
     bookedRooms: {
       type: Number,
     },
+
   },
   { timestamps: true }
 );
