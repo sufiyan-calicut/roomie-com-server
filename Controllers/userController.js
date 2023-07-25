@@ -76,16 +76,13 @@ module.exports = {
             '<p> Please enter this code to access your account. This OTP will expire in 5 minutes.</p>',
         };
         transporter.sendMail(mailOptions, (error, info) => {
-          // if (error) {
-          // }
-          // console.log('Message sent: %s', info.messageId);
-          // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
           if (error) {
             console.log('Error sending email:', error);
           } else {
             // Check if the info object is not undefined before accessing its properties
             if (info && info.messageId) {
               console.log('Message sent: %s', info.messageId);
+              console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
             } else {
               console.log('Email sent, but message ID not available in the info object.');
             }
@@ -348,7 +345,7 @@ module.exports = {
   fetchSearchData: async (req, res) => {
     try {
       const skip = req.body.hotelData.length;
-      const location = req.body.location.trim(); 
+      const location = req.body.location.trim();
       const userInput = {
         $or: [
           { hotelName: { $regex: new RegExp(location, 'i') } },
