@@ -180,10 +180,15 @@ module.exports = {
         };
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-            return console.log(error), 'otp errorrrrrrrrrr';
+            console.log('Error sending email:', error);
+          } else {
+            // Check if the info object is not undefined before accessing its properties
+            if (info && info.messageId) {
+              console.log('Message sent: %s', info.messageId);
+            } else {
+              console.log('Email sent, but message ID not available in the info object.');
+            }
           }
-          console.log('Message sent: %s', info.messageId);
-          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
           setTimeout(function () {
             otp = 0;
