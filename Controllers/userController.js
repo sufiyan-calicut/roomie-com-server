@@ -348,12 +348,13 @@ module.exports = {
   fetchSearchData: async (req, res) => {
     try {
       const skip = req.body.hotelData.length;
+      const location = req.body.location.trim(); 
       const userInput = {
         $or: [
-          { hotelName: { $regex: new RegExp(req.body.location, 'i') } },
-          { place: { $regex: new RegExp(req.body.location, 'i') } },
-          { city: { $regex: new RegExp(req.body.location, 'i') } },
-          { state: { $regex: new RegExp(req.body.location, 'i') } },
+          { hotelName: { $regex: new RegExp(location, 'i') } },
+          { place: { $regex: new RegExp(location, 'i') } },
+          { city: { $regex: new RegExp(location, 'i') } },
+          { state: { $regex: new RegExp(location, 'i') } },
         ],
         amnities: req.body.amnities == null || req.body.amnities?.length == 0 ? null : { $all: [...req.body.amnities] },
         availableRooms: req.body.roomCounts ? { $gte: req.body.roomCounts } : null,
