@@ -365,12 +365,14 @@ module.exports = {
           queryConditions[key] = userInput[key];
         }
       }
+      const count = await HotelDB.countDocuments(queryConditions);
 
+      let isDataOver = Boolean(count <= skip + 6);
       await HotelDB.find(queryConditions)
         .sort({ price: req.body.sort })
         .limit(6 + skip)
         .then((data) => {
-          res.status(200).json({ data });
+          res.status(200).json({ data,isDataOver });
         })
         .catch((error) => {
           res.status(401).json({ message: 'error on fetching data from db' });
