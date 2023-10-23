@@ -10,8 +10,9 @@ const cors = require("cors");
 
 app.use(express.json());
 
+// const allowedOrigin = 'http://localhost:5000/';
 const corsOptions = {
-  origin: "*",
+  origin: '*',
   credentials: true,
   optionSuccessStatus: 200,
   allowedHeaders:[
@@ -23,9 +24,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: 'Internal server error' });
+});
+
+
 app.use("/api/user", userRoute);
 app.use("/api/admin",adminRoute);
 app.use("/api/hotel",hotelRoute);
+
+
 
 
 const port = process.env.PORT || 4000;
