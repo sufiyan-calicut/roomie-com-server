@@ -79,6 +79,7 @@ module.exports = {
           if (error) {
             console.log('Error sending email:', error);
           } else {
+            console.log('no issue', info);
             // Check if the info object is not undefined before accessing its properties
             if (info && info.messageId) {
               console.log('Message sent: %s', info.messageId);
@@ -86,13 +87,12 @@ module.exports = {
             } else {
               console.log('Email sent, but message ID not available in the info object.');
             }
+            res.status(200).json({ message: 'otp send to your email', success: true });
           }
 
           setTimeout(function () {
             otp = 0;
           }, 60 * 5 * 1000); // 5 minutes in milliseconds
-
-          res.status(200).json({ message: 'otp send to your email', success: true });
         });
       }
     } catch (error) {
@@ -108,22 +108,30 @@ module.exports = {
       if (otp === userOtp) {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+  
         const userData = {
           name,
           place,
           email,
           phone,
-          password: hashedPassword, // Use the hashed password variable
+          password: hashedPassword,
         };
-
+  
         const newUser = new User(userData);
-        await newUser.save();
-        res.status(200).json({ message: 'user created successfully', success: true });
+        const userdb = await newUser.save();
+  
+        const userdbId = userdb._id.toString();
+        const wallet = new WalletDB({ userId: userdbId });
+        await wallet.save();
+  
+        console.log('User created successfully');
+        res.status(200).json({ message: 'User created successfully', success: true });
       } else {
+        res.status(403).json({ message: 'Incorrect OTP' });
       }
     } catch (error) {
-      res.status(500).json({ message: 'internal server error' });
+      console.error(error); // Log the error for debugging
+      res.status(500).json({ message: 'Internal server error' });
     }
   },
 
@@ -372,7 +380,7 @@ module.exports = {
         .sort({ price: req.body.sort })
         .limit(6 + skip)
         .then((data) => {
-          res.status(200).json({ data,isDataOver });
+          res.status(200).json({ data, isDataOver });
         })
         .catch((error) => {
           res.status(401).json({ message: 'error on fetching data from db' });

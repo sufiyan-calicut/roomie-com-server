@@ -6,32 +6,27 @@ const WalletSchema = mongoose.Schema(
       type: mongoose.Types.ObjectId,
       required: true,
     },
-    balance:{
-      type:Number,
-      required:true
+    balance: {
+      type: Number,
+      default: 0,
     },
     transactions: [
       {
         hotelId: {
           type: mongoose.Types.ObjectId,
-          required: true,
         },
         bookingId: {
           type: mongoose.Types.ObjectId,
-          required: true,
         },
         amount: {
           type: Number,
-          required: true,
         },
         description: {
           type: String,
-          required: true,
         },
-        type:{
-          type:String,
-          required:true
-        }
+        type: {
+          type: String,
+        },
       },
     ],
   },
