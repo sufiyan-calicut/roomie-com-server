@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const userModel = require('../Models/userModel');
+const userModel = require('../Models/userModel.js');
 const HotelDB = require('../Models/hotelSchema.js');
-const BookingDB = require('../Models/bookingSchema');
+const BookingDB = require('../Models/bookingSchema.js');
 
 module.exports = {
   // .........................................ADMIN_AUTH..............................................
