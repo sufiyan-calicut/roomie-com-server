@@ -157,10 +157,10 @@ module.exports = {
           expiresIn: '1d',
         });
 
-        res.status(200).json({ message: 'Login successfull', success: true, data: token });
+        res.status(200).json({ message: 'Login successful', success: true, data: token });
       }
     } catch (error) {
-      res.status(500).json({ message: 'networkerror', success: false });
+      res.status(500).json({ message: 'network error', success: false });
     }
   },
 
