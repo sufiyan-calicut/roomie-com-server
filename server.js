@@ -29,7 +29,7 @@ app.use('/api/user', userRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/hotel', hotelRoute);
 
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect('mongodb+srv://roomie:sufiyan@cluster0.f3p9hrx.mongodb.net/roomie?retryWrites=true&w=majority');
 
 const connection = mongoose.connection;
 
