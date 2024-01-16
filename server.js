@@ -36,7 +36,7 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('MongoDB connected successfully');
 
-  const port = process.env.PORT || 4000;
+  const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`Server started on port ${port}`));
 });
 connection.on('error', (err) => {
