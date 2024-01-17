@@ -139,6 +139,8 @@ module.exports = {
 
   doLogin: async (req, res) => {
     try {
+
+
       const { email, password } = req.body;
       const userExist = await User.findOne({ $and: [{ email: email }, { userType: 'user' }] });
 

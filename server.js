@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-// const dbConfig = require('./config/dbConfig.js');xxxxxxxxxxxxxl
+// const dbConfig = require('./config/dbConfig.js');
 require('dotenv').config();
 const userRoute = require('./Routes/userRoutes.js');
 const adminRoute = require('./Routes/adminRoute.js');
@@ -42,7 +42,7 @@ connection.on('error', (err) => {
   console.log('error in mongodb connection', err);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
 // const port = process.env.PORT || 4000;
